@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Label Generator</title>
+<style>
+  @font-face {
+    font-family: Univers55;
+    src: url(univers55.ttf);
+  }
+
+  @font-face {
+    font-family: Univers65;
+    src: url(univers65.ttf);
+  }
+
+  .content {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: row;
+  }
+
+  .content-item {
+    width: 50%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .wall-text-output {
+    width: 4in;
+
+    border-width: .05in;
+    border-style: solid;
+    border-color: black;
+
+    padding: .2in;
+
+    font-size: 15px;
+    font-family: Univers55;
+  }
+
+  #wall-text-piece-name:not(:empty) {
+    padding-top: .12in;
+    font-family: Univers65;
+  }
+
+  #wall-text-piece-medium:not(:empty) {
+    font-style: italic;
+  }
+
+  #wall-text-piece-description:not(:empty) {
+    padding-top: .12in;
+  }
+
+  #output {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 5in;
+  }
+
+  .spacer {
+    position: relative;
+    width: 5in;
+    height: 0.25in;
+  }
+
+  .marks {
+    opacity: 0;
+    width: .25in;
+    height: .25in;
+    position: absolute;
+  }
+
+  .top-left {
+    top: 0px;
+    left: 0px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0in .01in .01in 0in;
+  }
+
+  .top-right {
+    top: 0px;
+    right: 0px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0in 0in .01in .01in;
+  }
+
+  .bottom-left {
+    top: 0px;
+    left: 0px;
+    border-style: solid;
+    border-color: black;
+    border-width: .01in .01in 0in 0in;
+  }
+
+  .bottom-right {
+    top: 0px;
+    right: 0px;
+    border-style: solid;
+    border-color: black;
+    border-width: .01in 0in 0in .01in;
+  }
+
+  @media print {
+    #input {
+      display: none;
+    }
+
+    .marks {
+      opacity: 1;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="content">
+  <div class="content-item" id="input">
+    <h1>Labelmaker</h1>
+    <p>This is a tool for generating wall text labels. The form is live updating. Once you are done, click print and it will print out just the final wall text.</p>
+
+    <div class="label-input">
+      <p>Name: <input type="text" id="name" value="Joe Student"></p>
+      <p>Piece Name: <input type="text" id="piece-name" value="Art Piece, 2016"></p>
+      <p>Medium: <input type="text" id="piece-medium" value="Acrylic on Canvas"></p>
+      <p>Description:<br/> <textarea id="piece-description" rows="10" cols="50">Write something here</textarea><br/>This field supports standard HTML tags for any customization.</p>
+    </div>
+    <input type="button" onclick="print();" value="PRINT" />
+  </div>
+  <div class="content-item" id="output">
+    <div class="spacer">
+      <div class="top-left marks"></div>
+      <div class="top-right marks"></div>
+    </div>
+    <div class="wall-text-output">
+      <div id="wall-text-name"></div>
+      <div id="wall-text-piece-name"></div>
+      <div id="wall-text-piece-medium"></div>
+      <div id="wall-text-piece-description"></div>
+    </div>
+    <div class="spacer">
+      <div class="bottom-left marks"></div>
+      <div class="output-spacing"></div>
+      <div class="bottom-right marks"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+
+function setName() {
+  var name = $('#name').val();
+  $('#wall-text-name').html(name);
+}
+
+function setPieceName() {
+  var pieceName = $('#piece-name').val();
+  $('#wall-text-piece-name').html(pieceName);
+}
+
+function setMedium() {
+  var medium = $('#piece-medium').val();
+  $('#wall-text-piece-medium').html(medium);
+}
+
+function setDescription() {
+  var description = $('#piece-description').val();
+  $('#wall-text-piece-description').html(description);
+}
+
+(function init() {
+  setName();
+  setPieceName();
+  setMedium();
+  setDescription();
+
+  $('#name').change(setName);
+  $('#piece-name').change(setPieceName);
+  $('#piece-medium').change(setMedium);
+  $('#piece-description').change(setDescription);
+})();
+</script>
+</body>
+</html>
